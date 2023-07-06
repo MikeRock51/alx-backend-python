@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 
-to_kv = __import__('7-to_kv').to_kv
+sum_list = __import__('5-sum_list').sum_list
 
-print(to_kv.__annotations__)
-print(to_kv("eggs", 3))
-print(to_kv("school", 0.02))
+floats = [3.14, 1.11, 2.22]
+floats_sum = sum_list(floats)
+print(floats_sum == sum(floats))
+print(sum_list.__annotations__)
+print("sum_list(floats) returns {} which is a {}".format(floats_sum, type(floats_sum)))
+
