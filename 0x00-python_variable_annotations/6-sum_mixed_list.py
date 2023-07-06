@@ -4,8 +4,10 @@
     list mxd_lst of integers and floats and returns their sum as a float.
 """
 
+from typing import List, Union
 
-def sum_mixed_list(mxd_list: list[int | float]) -> float:
+
+def sum_mixed_list(mxd_list: List[Union[int, float]]) -> float:
     """Returns the sum of mxd_list as a float"""
 
     return sum(mxd_list)
