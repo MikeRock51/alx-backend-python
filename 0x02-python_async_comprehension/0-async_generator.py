@@ -8,10 +8,10 @@
 
 import asyncio
 from random import uniform
-from typing import Iterator
+from typing import Generator
 
 
-async def async_generator() -> Iterator[float]:
+async def async_generator() -> Generator[float, None, None]:
     """Asynchronously yields a random number between 0 and 10, 10 times"""
 
     for _ in range(10):
