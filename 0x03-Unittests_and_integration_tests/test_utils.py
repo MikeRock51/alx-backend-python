@@ -16,12 +16,12 @@
     that the function returns the expected result.
     The body of the test method should not be longer than 2 lines.
 """
-from unittest import TestCase
+import unittest
 from utils import access_nested_map
 from parameterized import parameterized
 
 
-class TestAccessNestedMap(TestCase):
+class TestAccessNestedMap(unittest.TestCase):
     """Tests utils methods for right output"""
 
     @parameterized.expand([
