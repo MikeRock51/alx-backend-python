@@ -18,7 +18,7 @@
 """
 
 from client import GithubOrgClient
-from unittest.mock import Mock, patch, PropertyMock
+from unittest.mock import patch, PropertyMock
 import unittest
 from parameterized import parameterized
 
@@ -44,3 +44,17 @@ class TestGithubOrgClient(unittest.TestCase):
                           PropertyMock(return_value=payload)):
             publicRepos = GithubOrgClient(login)._public_repos_url
             self.assertEqual(payload['repos_url'], publicRepos)
+
+    @patch('client.get_json', return_value=[{"name": "Mike Rock"},
+                                            {"name": "Godwin"}])
+    def test_public_repos(self, mockedGet):
+        """Performs a unittest on GithubOrgClient.public_repos"""
+        with patch.object(GithubOrgClient, '_public_repos_url',
+                          PropertyMock(return_value="Mike Rock rocks!"))\
+                as mockedPR:
+
+            repoLists = GithubOrgClient('rock-on').public_repos()
+            self.assertEqual(repoLists, ["Mike Rock", "Godwin"])
+
+            mockedGet.assert_called_once()
+            mockedPR.assert_called_once()
