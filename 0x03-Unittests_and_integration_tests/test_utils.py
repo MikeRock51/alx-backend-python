@@ -17,7 +17,7 @@
     The body of the test method should not be longer than 2 lines.
 """
 import unittest
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 from parameterized import parameterized
 from unittest.mock import Mock, patch
 
@@ -60,3 +60,32 @@ class TestGetJson(unittest.TestCase):
             response = get_json(url)
             self.assertEqual(response, payload)
             mockGet.assert_called_once_with(url)
+
+class TestMemoize(unittest.TestCase):
+    """Tests utils.memoize method"""
+    def test_memoize(self):
+        """
+            Tests that a_method is only called once
+            when a_property called twice
+        """
+        class TestClass:
+            """Test Class"""
+            def a_method(self):
+                """Returns 42"""
+                return 42
+
+            @memoize
+            def a_property(self):
+                """
+                    Returns the return value of a_method or
+                    retrieves the memoized value if exists
+                """
+                return self.a_method()
+
+        @patch.object(TestClass, 'a_method')
+        def mock_a_method(self, mock):
+            obj = TestClass()
+            obj.a_property()
+            obj.a_property()
+
+            mock.assert_called_once()
