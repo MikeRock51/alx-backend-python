@@ -85,7 +85,7 @@ class TestGithubOrgClient(unittest.TestCase):
     'org_payload', 'repos_payload', 'expected_repos', 'apache2_repos'
 ], TEST_PAYLOAD)
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    """Tests the GithubOrgClient.public_repos method in an integration test"""
+    """Tests the GithubOrgClient. public_repos method in an integration test"""
     @classmethod
     def setUpClass(cls) -> None:
         """Called before tests are executed"""
@@ -104,13 +104,13 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         cls.get_patcher.start()
 
     def test_public_repos(self) -> None:
-        """Performs a test on GithubOrgClient.public_repos"""
+        """Performs a test on GithubOrgClient. public_repos"""
         self.assertEqual(
             GithubOrgClient("google").public_repos(),
             self.expected_repos,)
 
     def test_public_repos_with_license(self) -> None:
-        """Performs a test on GithubOrgClient.public_repos with license"""
+        """Performs a test on GithubOrgClient. public_repos with license"""
         self.assertEqual(
             GithubOrgClient("google").public_repos(license="apache-2.0"),
             self.apache2_repos,)
