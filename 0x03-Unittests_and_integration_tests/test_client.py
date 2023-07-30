@@ -18,7 +18,7 @@
 """
 
 from client import GithubOrgClient
-from unittest.mock import patch, PropertyMock
+from unittest.mock import patch, PropertyMock, Mock
 import unittest
 from parameterized import parameterized
 
@@ -66,3 +66,12 @@ class TestGithubOrgClient(unittest.TestCase):
             mockedPR.assert_called_once()
 
         mockedGet.assert_called_once()
+
+    @parameterized.expand([
+        ({"license": {"key": "my_license"}}, "my_license", True),
+        ({"license": {"key": "other_license"}}, "my_license", False),
+    ])
+    def test_has_license(self, repo, license, expected):
+        """Performs a unittest on GithubOrgClient.has_license"""
+        hL = GithubOrgClient('random').has_license(repo, license)
+        self.assertEqual(hL, expected)
