@@ -87,7 +87,7 @@ class TestGithubOrgClient(unittest.TestCase):
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     """Tests the GithubOrgClient.public_repos method in an integration test"""
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         """Called before tests are executed"""
         payloads = {
             'https://api.github.com/orgs/google/repos': cls.repos_payload,
@@ -107,15 +107,13 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         """Performs a test on GithubOrgClient.public_repos"""
         self.assertEqual(
             GithubOrgClient("google").public_repos(),
-            self.expected_repos,
-        )
+            self.expected_repos,)
 
     def test_public_repos_with_license(self) -> None:
         """Performs a test on GithubOrgClient.public_repos with license"""
         self.assertEqual(
             GithubOrgClient("google").public_repos(license="apache-2.0"),
-            self.apache2_repos,
-        )
+            self.apache2_repos,)
 
     @classmethod
     def tearDownClass(cls) -> None:
