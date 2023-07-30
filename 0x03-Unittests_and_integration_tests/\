@@ -48,21 +48,16 @@ class TestGithubOrgClient(unittest.TestCase):
     @patch('client.get_json')
     def test_public_repos(self, mockedGet):
         """Performs a unittest on GithubOrgClient.public_repos"""
-        payload = {
-            'repos_url': 'https://api.github.com/orgs/mock/repos',
-            "repos": [
-                {"name": "Mike Rock"},
-                {"name": "Musician Connect"}
-            ]}
+        mockedGet.return_value = [{"name": "Mike Rock"},
+                                            {"name": "Musician Connect"}]
+        with patch('client.GithubOrgClient._public_repos_url',
+                          new_callable=PropertyMock) as mockedPR:
+                          
+            mockedPR.return_value = "https://api/rock.com"
 
-        mockedGet.return_value = payload["repos"]
+            repoList = GithubOrgClient('rock-on').public_repos()
+            self.assertEqual(repoList, ["Mike Rock", "Musician Connect"])
 
-        with patch.object(GithubOrgClient, '_public_repos_url',
-                          PropertyMock(return_value=payload['repos_url']))\
-                as mockedPR:
-
-            repoLists = GithubOrgClient('rock-on').public_repos()
-            self.assertEqual(repoLists, ["Mike Rock", "Musician Connect"])
+            mockedGet.assert_called_once()
+            print('In between')
             mockedPR.assert_called_once()
-
-        mockedGet.assert_called_once()
